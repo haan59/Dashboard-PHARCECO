@@ -3,12 +3,15 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "engines": {
+        "node": ">=20 <23"
+    },
     "scripts": {
         "sass:build": "sass src/scss/main.scss dist/custom.css --style=expanded",
         "sass:watch": "sass src/scss/main.scss dist/custom.css --watch --style=expanded",
         "tw:build": "postcss src/css/tailwind.css -o dist/main.css",
         "tw:watch": "postcss src/css/tailwind.css -o dist/main.css --watch",
-        "build": "npm run sass:build && npm run tw:build",
+        "build": "npm run sass:build && npm run tw:build && node scripts/prepare-dist.js",
         "dev": "concurrently \"npm run sass:watch\" \"npm run tw:watch\"",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

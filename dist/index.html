@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bảng theo dõi | PHARCECO</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="./main.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+        <script defer src="https://unpkg.com/@popperjs/core@2"></script>
+        <script defer src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.min.js"></script>
+    </head>
+    <body class="bg-gray-100 min-h-screen">
+        <!-- ===== TOPBAR ===== -->
+        <header class="bg-[#f1f9f8] px-3 py-3 sm:px-4 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between top-0 z-50">
+            <!-- Left: Logo + Title -->
+            <div class="flex w-full min-w-0 flex-col gap-3 md:flex-row md:items-center md:justify-between lg:w-auto lg:flex-nowrap lg:justify-start lg:gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-14.75 h-14.75 rounded-lg flex items-center justify-center shrink-0">
+                        <img class="rounded-lg flex items-center justify-center shrink-0" src="./Img/logoPHARCECO.png" alt="PHARCECO Logo" />
+                    </div>
+                    <span class="text-2xl sm:text-3xl leading-6 font-semibold tracking-tight text-[#03524D]">Bảng theo dõi</span>
+                </div>
+
+                <!-- Center: Meta counts -->
+                <div class="flex items-center gap-2 sm:gap-0 lg:flex-nowrap lg:whitespace-nowrap">
+                    <div class="text-black flex items-center gap-2 bg-white/10 rounded-full px-2.5 sm:px-3 xl:px-4 py-1 font-semibold">
+                        <div class="relative">
+                            <img src="./Img/Shop.svg" class="w-6 h-6 shrink-0" />
+                            <img src="./Img/Medical.svg" class="w-[9.2px] h-[7.2px] absolute left-2 top-3.25" />
+                        </div>
+                        <span class="text-sm xl:text-base">10 Cửa hàng</span>
+                    </div>
+                    <img src="./Img/Line 78.svg" class="hidden sm:block" />
+                    <div class="text-black flex items-center justify-center gap-2 bg-white/10 rounded-full px-2.5 sm:px-3 xl:px-4 py-1 font-semibold">
+                        <i class="text-center content-center w-6 h-6 fa-regular fa-user text-lg shrink-0 text-black/50"></i>
+                        <span class="text-sm xl:text-base">45 nhân viên</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Time + User -->
+            <div class="flex w-full items-center justify-between gap-3 sm:gap-4 lg:w-auto lg:flex-nowrap lg:justify-end lg:gap-4">
+                <div class="min-w-27 shrink-0 text-left sm:text-right">
+                    <div class="text-xl sm:text-[22px] font-medium tracking-wider" id="clock">--:--:--</div>
+                    <div class="text-sm text-black/50 font-regular whitespace-nowrap" id="date-display"></div>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div class="relative" data-dropdown="support">
+                        <button type="button" class="dropdown-toggle-feedback dropdown-toggle-feedback--support relative flex h-12 w-12 items-center justify-center cursor-pointer" data-dropdown-toggle aria-haspopup="true" aria-expanded="false" aria-label="Mở menu hỗ trợ">
+                            <img src="./Img/Contact.svg" class="block h-12 w-12" alt="Support" />
+                            <img src="./Img/bx_support.svg" class="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2" alt="Support icon" />
+                        </button>
+
+                        <div data-dropdown-menu class="dropdown-menu-caret dropdown-menu-caret--support hidden absolute right-0 top-full mt-2.5 w-55 rounded-[14px] border border-[#dfe3e8] bg-white p-2 shadow-[0_12px_32px_rgba(2,64,58,0.12)] z-100">
+                            <button type="button" class="w-full rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold text-slate-900 transition-colors hover:bg-[#03524d14]">Làm mới dữ liệu</button>
+                            <button type="button" class="w-full rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold text-slate-900 transition-colors hover:bg-[#03524d14]">Xem hướng dẫn</button>
+                            <button type="button" class="w-full rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold text-slate-900 transition-colors hover:bg-[#03524d14]">Liên hệ hỗ trợ</button>
+                        </div>
+                    </div>
+                    <div class="relative" data-dropdown="user">
+                        <button type="button" class="dropdown-toggle-feedback dropdown-toggle-feedback--user flex items-center gap-2.5 rounded-4xl bg-white px-1.5 pe-2 sm:pe-4 py-1 border-[#DFDFDFE5] border cursor-pointer" data-dropdown-toggle aria-haspopup="true" aria-expanded="false" aria-label="Mở menu tài khoản">
+                            <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-[11px] font-bold ring-2 ring-green-400/50 shrink-0">LV</div>
+                            <div class="hidden sm:block font-medium leading-3.5 ms-1 me-2 text-left">
+                                <p class="text-sm text-black">Lê Vũ Nhật Duy</p>
+                                <p class="text-xs text-black/50 mt-0.5">Quản trị viên</p>
+                            </div>
+                            <div class="w-6 h-6 rounded-full bg-black/10 relative">
+                                <i data-dropdown-chevron class="absolute text-[10px] fa-solid fa-angle-down text-black/50 left-2 top-1.75 transition-transform duration-200"></i>
+                            </div>
+                        </button>
+
+                        <div data-dropdown-menu class="dropdown-menu-caret dropdown-menu-caret--user hidden absolute right-0 top-full mt-2.5 w-60 rounded-[14px] border border-[#dfe3e8] bg-white p-2 shadow-[0_12px_32px_rgba(2,64,58,0.12)] z-100">
+                            <button type="button" class="w-full rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold text-slate-900 transition-colors hover:bg-[#03524d14]">Thông tin cá nhân</button>
+                            <button type="button" class="w-full rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold text-slate-900 transition-colors hover:bg-[#03524d14]">Cài đặt tài khoản</button>
+                            <button type="button" class="w-full rounded-[10px] px-3 py-2.5 text-left text-sm font-bold text-red-500 transition-colors hover:bg-red-50">Đăng xuất</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <div class="relative z-0 flex flex-col gap-4 px-3 pt-3 pb-4 sm:px-4 xl:flex-row xl:items-start bg-[#f1f9f8]">
+            <!-- STORE CARDS GRID (3 col × 3 row) -->
+            <main class="grid flex-1 min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 2xl:grid-cols-3">
+                <!-- ── Card 1: Chính Kinh (75%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO CHÍNH KINH</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">75 P. Chính Kinh, Thanh Xuân Trung, Thanh Xuân</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="75 25" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">75%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    3
+                                    <span class="text-black">/4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">140</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 2: An Dương (100%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO AN DƯƠNG</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">158 Hồng Hà, P. An Dương, Tây Hồ</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="99.9 0.1" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">100%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    5
+                                    <span class="text-black">/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">232</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 3: Yên Xá (50%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO YÊN XÁ</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">77 D. Yên Xá, Phường Thanh Trì</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#fb923c" stroke-width="2" stroke-dasharray="50 50" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">50%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    2
+                                    <span class="text-black">/4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">324</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 4: Cổ Nhuế (100%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO CỔ NHUẾ</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">198 D. Cổ Nhuế, Cổ Nhuế, Bắc Từ Liêm</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="99.9 0.1" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">100%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    4
+                                    <span class="text-black">/4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">232</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 5: Xuân Phương (66.6%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO XUÂN PHƯƠNG</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">257 D. Xuân Phương, Vân Canh</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="66.6 33.4" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">66.6%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    2
+                                    <span class="text-black">/3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">232</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 6: Kẻ Vẽ (100%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO KẺ VẼ</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">114 P. Kẻ Vẽ, Đồng Ngạc, Bắc Từ Liêm</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="99.9 0.1" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">100%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    5
+                                    <span class="text-black">/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">232</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 7: Lạc Trung (100%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO LẠC TRUNG</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">232A P. Lạc Trung, Thanh Lương, Hai Bà Trưng</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="99.9 0.1" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">100%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    5
+                                    <span class="text-black">/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">204</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 8: Nguyễn Viết Xuân (100%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO NGUYỄN VIẾT XUÂN</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">163 P. Nguyễn Viết Xuân, Phường Hà Đông</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="99.9 0.1" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">100%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    5
+                                    <span class="text-black">/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">178</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+
+                <!-- ── Card 9: Nguyễn Khuyến (100%) ── -->
+                <div class="store-card w-112.5 max-w-full">
+                    <div class="store-card__head">
+                        <div class="store-icon">
+                            <div class="relative w-10 h-10">
+                                <img src="./Img/Shop.svg" class="h-[33.33px] w-[33.33px] absolute left-1 top-1 store-card-shop-icon" />
+                                <img src="./Img/Medical.svg" class="h-2.5 w-2.5 absolute left-4 top-5.5 store-card-medical-icon" />
+                            </div>
+                        </div>
+                        <div class="ms-3 min-w-0 flex-1">
+                            <h3 class="text-base font-bold text-black uppercase leading-8">PHARCECO NGUYỄN KHUYẾN</h3>
+                            <p class="text-sm leading-4.5 text-black/50 font-medium line-clamp-2 text-pretty">52 Nguyễn Khuyến, Phường Hà Đông</p>
+                        </div>
+                        <button class="self-start text-gray-300 hover:text-gray-500 leading-none shrink-0 w-6 h-6 text-2xl">···</button>
+                    </div>
+                    <div class="flex divide-x divide-gray-200 mt-5 mb-2">
+                        <div class="pr-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase">Điểm danh</p>
+                            <div class="flex items-center gap-4">
+                                <div class="ring-chart">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="1" />
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="99.9 0.1" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                    </svg>
+                                    <span class="ring-chart__label text-xs leading-6.5 font-bold text-[#818181] text-center">100%</span>
+                                </div>
+                                <div class="text-2xl leading-6.5 font-bold text-[#4EB780] font-['Outfit']">
+                                    5
+                                    <span class="text-black">/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-6">
+                            <p class="text-sm leading-6 text-black/50 font-medium uppercase mb-1.5">Lượng khách</p>
+                            <p class="mt-2 text-4xl leading-6 font-medium text-black align-middle">196</p>
+                        </div>
+                    </div>
+                    <div class="mt-auto h-14 overflow-hidden"><canvas class="mini-chart"></canvas></div>
+                </div>
+            </main>
+
+            <!-- ===== RIGHT PANEL ===== -->
+            <aside class="w-full flex flex-col gap-4 sm:gap-6 xl:w-112.5 2xl:w-112.5 xl:flex-none xl:self-start">
+                <!-- Widget 1: Thống kê Lượng khách -->
+                <div class="bg-white rounded-xl overflow-hidden shrink-0">
+                    <div class="bg-[#03524D] text-white px-4 py-3 flex items-center gap-2">
+                        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        <span class="font-bold text-lg leading-6">Thống kê Lượng khách</span>
+                    </div>
+                    <div class="p-4 sm:p-6 sm:pe-4">
+                        <!-- Total today -->
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="w-10 h-10 flex items-center justify-center shrink-0">
+                                <img src="./Img/customer.svg" />
+                            </div>
+                            <div class="flex content-center justify-between items-center flex-1">
+                                <div class="text-sm leading-4.75 text-black/50 font-medium line-clamp-2 text-pretty w-21 h-9.5">Lượng khách Hôm nay</div>
+                                <div class="text-3xl sm:text-4xl font-medium text-black leading-6 align-middle text-right mt-0.5 flex items-center justify-end gap-2">
+                                    2.394
+                                    <span class="text-[#EE4141] font-normal text-xs">▼</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Table header -->
+                        <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 text-sm text-black/50 pt-3 pb-2 mb-4 border-b border-gray-200 font-medium items-end">
+                            <span class="text-sm font-medium text-black/50 align-middle leading-8">Cửa hàng</span>
+                            <span class="text-right leading-4.5">
+                                Khung giờ
+                                <br />
+                                đông khách
+                            </span>
+                            <span class="text-right leading-4.5">
+                                Số lượng
+                                <br />
+                                Khách hàng
+                            </span>
+                        </div>
+                        <!-- Table rows -->
+                        <div class="space-y-2.5 mt-2.5">
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#F27611] text-[#F27611] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">1</span>
+                                    <span class="text-base font-bold text-black truncate">Chính Kinh</span>
+                                </div>
+                                <span class="text-sm font-bold leading-4.5 text-[#666666] border border-[#CCCCCC] rounded px-1.5 py-px whitespace-nowrap text-center align-middle w-23.75 h-5.5 justify-self-end">12:00-13:00</span>
+                                <div class="flex items-center justify-end gap-2">
+                                    <span class="text-lg font-bold text-black text-right whitespace-nowrap">3420</span>
+                                    <span class="text-[#EE4141] font-normal text-xs">▼</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#03524D] text-[#03524D] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">2</span>
+                                    <span class="text-base font-bold text-black truncate">An Dương</span>
+                                </div>
+                                <span class="text-sm font-bold leading-4.5 text-[#666666] border border-[#CCCCCC] rounded px-1.5 py-px whitespace-nowrap text-center align-middle w-23.75 h-5.5 justify-self-end">12:00-13:00</span>
+                                <div class="flex items-center justify-end gap-2">
+                                    <span class="text-lg font-bold text-black text-right whitespace-nowrap">2232</span>
+                                    <span class="text-[#89C86D] font-normal text-xs">▲</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#89C86D] text-[#89C86D] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">3</span>
+                                    <span class="text-base font-bold text-black truncate">Yên Xá</span>
+                                </div>
+                                <span class="text-sm font-bold leading-4.5 text-[#666666] border border-[#CCCCCC] rounded px-1.5 py-px whitespace-nowrap text-center align-middle w-23.75 h-5.5 justify-self-end">12:00-13:00</span>
+                                <div class="flex items-center justify-end gap-2">
+                                    <span class="text-lg font-bold text-black text-right whitespace-nowrap">2032</span>
+                                    <span class="text-[#89C86D] font-normal text-xs">▲</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#CCCCCC] text-[#666666] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">4</span>
+                                    <span class="text-base font-bold text-gray-400 truncate">Cổ Nhuế</span>
+                                </div>
+                                <span class="text-sm font-bold leading-4.5 text-[#666666] border border-[#CCCCCC] rounded px-1.5 py-px whitespace-nowrap text-center align-middle w-23.75 h-5.5 justify-self-end">12:00-13:00</span>
+                                <div class="flex items-center justify-end gap-2">
+                                    <span class="text-lg font-bold text-black text-right whitespace-nowrap">1989</span>
+                                    <span class="text-[#89C86D] font-normal text-xs">▲</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#CCCCCC] text-[#666666] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">5</span>
+                                    <span class="text-base font-bold text-gray-400 truncate">Xuân Phương</span>
+                                </div>
+                                <span class="text-sm font-bold leading-4.5 text-[#666666] border border-[#CCCCCC] rounded px-1.5 py-px whitespace-nowrap text-center align-middle w-23.75 h-5.5 justify-self-end">12:00-13:00</span>
+                                <div class="flex items-center justify-end gap-2">
+                                    <span class="text-lg font-bold text-black text-right whitespace-nowrap">1544</span>
+                                    <span class="text-[#EE4141] font-normal text-xs">▼</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget 2: Điểm danh Nhân viên -->
+                <div class="bg-white rounded-xl overflow-hidden flex flex-col xl:min-h-90.25">
+                    <div class="bg-[#03524D] text-white px-4 py-3 flex items-center gap-2">
+                        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span class="font-bold text-lg leading-6">Điểm danh Nhân viên</span>
+                    </div>
+                    <div class="p-4 sm:p-6 sm:pe-4 xl:min-h-90.25">
+                        <!-- Stats summary -->
+                        <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+                            <div class="relative w-18 h-18 shrink-0">
+                                <svg viewBox="0 0 36 36" class="w-full h-full">
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="#E8E8E8" stroke-width="2" />
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="#4EB780" stroke-width="2" stroke-dasharray="86 14" stroke-linecap="round" transform="rotate(-90 18 18)" />
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-base leading-6.5 font-bold text-[#818181] text-center">86%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center w-full flex-col gap-3 divide-y divide-gray-200 sm:flex-1 sm:min-h-18 sm:flex-row sm:gap-0 sm:divide-y-0 sm:divide-x">
+                                <div class="pb-3 sm:pb-0 sm:pr-6 sm:h-full sm:flex sm:flex-col sm:justify-center">
+                                    <p class="text-base text-black/50 font-medium leading-6">Tỉ lệ đúng giờ</p>
+                                    <p class="text-[32px] leading-6.5 font-bold text-[#89C86D] font-['Outfit'] mt-1">
+                                        39
+                                        <span class="text-black">/45</span>
+                                    </p>
+                                </div>
+                                <div class="pt-3 sm:pt-0 sm:pl-6 sm:h-full sm:flex sm:flex-col sm:justify-center">
+                                    <p class="text-lg text-black/50 font-medium leading-6">Điểm danh</p>
+                                    <p class="text-2xl font-regular text-black leading-6.5 mt-1">
+                                        45/45
+                                        <span class="text-base text-[#8D8D8D] font-normal leading-6.5">(100%)</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Table header -->
+                        <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 text-xs text-black/50 pt-3 pb-2 mb-4 border-b border-gray-100 font-medium items-end">
+                            <span class="text-sm font-medium text-black/50 align-middle leading-8">Cửa hàng</span>
+                            <span class="text-right leading-4">
+                                Nhân viên
+                                <br />
+                                muộn
+                            </span>
+                            <span class="text-right leading-4">
+                                Số phút
+                                <br />
+                                muộn
+                            </span>
+                        </div>
+                        <!-- Table rows -->
+                        <div class="space-y-2.5 mt-2.5">
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#F27611] text-[#F27611] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">1</span>
+                                    <span class="text-base font-bold text-black truncate">Chính Kinh</span>
+                                </div>
+                                <span class="text-base font-bold text-black text-right">1</span>
+                                <span class="text-base font-bold text-black text-right">87</span>
+                            </div>
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#03524D] text-[#03524D] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">2</span>
+                                    <span class="text-base font-bold text-black truncate">An Dương</span>
+                                </div>
+                                <span class="text-base font-bold text-black text-right">2</span>
+                                <span class="text-base font-bold text-black text-right">42</span>
+                            </div>
+                            <div class="grid grid-cols-[minmax(136px,1fr)_88px_70px] sm:grid-cols-[1fr_98px_78px] xl:grid-cols-[1fr_112px_88px] 2xl:grid-cols-[1fr_118px_94px] gap-x-2 sm:gap-x-3 items-center">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-9 h-9 border-2 border-[#89C86D] text-[#89C86D] text-xl font-semibold rounded-md flex items-center justify-center shrink-0">3</span>
+                                    <span class="text-base font-bold text-black truncate">Yên Xá</span>
+                                </div>
+                                <span class="text-base font-bold text-black text-right">1</span>
+                                <span class="text-base font-bold text-black text-right">12</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <script defer src="./js/dashboard.js"></script>
+    </body>
+</html>
