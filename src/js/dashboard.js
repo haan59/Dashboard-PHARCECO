@@ -198,10 +198,192 @@
         initTooltipsWithRetry();
     }
 
+    function initStoreCardGridScrollbar() {
+        const gridHost = document.querySelector('[data-store-card-grid]');
+
+        if (!gridHost) {
+            return;
+        }
+
+        const osGlobal = window.OverlayScrollbarsGlobal;
+
+        if (!osGlobal || typeof osGlobal.OverlayScrollbars !== 'function') {
+            console.warn('OverlayScrollbars is not loaded, fallback to native scrollbar.');
+            return;
+        }
+
+        const { OverlayScrollbars } = osGlobal;
+
+        OverlayScrollbars(gridHost, {
+            overflow: {
+                x: 'hidden',
+                y: 'scroll',
+            },
+            scrollbars: {
+                autoHide: 'leave',
+                autoHideDelay: 600,
+                clickScroll: true,
+                theme: 'os-theme-dark',
+            },
+        });
+    }
+
+    function initRightPanelTableScrollbars() {
+        const hosts = Array.from(document.querySelectorAll('[data-panel-table-scroll-host]'));
+
+        if (!hosts.length) {
+            return;
+        }
+
+        const osGlobal = window.OverlayScrollbarsGlobal;
+        const osInstances = new Map();
+
+        const applyScrollRule = (host) => {
+            const rowsWrap = host.querySelector('[data-panel-table-rows]');
+
+            if (!rowsWrap) {
+                return;
+            }
+
+            const rows = Array.from(rowsWrap.children);
+            const maxVisibleRows = Number.parseInt(rowsWrap.dataset.maxVisibleRows || '5', 10);
+
+            if (!rows.length || rows.length <= maxVisibleRows) {
+                host.style.maxHeight = '';
+                host.style.overflow = 'visible';
+
+                const existingInstance = osInstances.get(host);
+
+                if (existingInstance) {
+                    existingInstance.destroy();
+                    osInstances.delete(host);
+                }
+                return;
+            }
+
+            const firstRowRect = rows[0].getBoundingClientRect();
+            const rowHeight = Math.ceil(firstRowRect.height);
+            const rowGap = rows.length > 1 ? Math.max(0, rows[1].offsetTop - rows[0].offsetTop - rowHeight) : 0;
+            const maxHeight = rowHeight * maxVisibleRows + rowGap * Math.max(0, maxVisibleRows - 1);
+
+            host.style.maxHeight = `${maxHeight}px`;
+            host.style.overflow = 'hidden';
+
+            if (!osGlobal || typeof osGlobal.OverlayScrollbars !== 'function') {
+                host.style.overflowY = 'auto';
+                host.style.overflowX = 'hidden';
+                return;
+            }
+
+            const { OverlayScrollbars } = osGlobal;
+            let instance = osInstances.get(host);
+
+            if (!instance) {
+                instance = OverlayScrollbars(host, {
+                    overflow: {
+                        x: 'hidden',
+                        y: 'scroll',
+                    },
+                    scrollbars: {
+                        autoHide: 'leave',
+                        autoHideDelay: 600,
+                        clickScroll: true,
+                        theme: 'os-theme-dark',
+                    },
+                });
+                osInstances.set(host, instance);
+            } else {
+                instance.update(true);
+            }
+        };
+
+        hosts.forEach((host) => {
+            applyScrollRule(host);
+
+            const observer = new MutationObserver(() => applyScrollRule(host));
+            const rowsWrap = host.querySelector('[data-panel-table-rows]');
+
+            if (rowsWrap) {
+                observer.observe(rowsWrap, { childList: true });
+            }
+        });
+
+        let resizeRafId = 0;
+        window.addEventListener('resize', () => {
+            if (resizeRafId) {
+                cancelAnimationFrame(resizeRafId);
+            }
+
+            resizeRafId = requestAnimationFrame(() => {
+                hosts.forEach((host) => applyScrollRule(host));
+            });
+        });
+    }
+
+    function initOdometers() {
+        if (typeof window.Odometer !== 'function') {
+            console.warn('Odometer.js is not loaded, numeric animations are disabled.');
+            return;
+        }
+
+        const parseNumericText = (value) => {
+            const normalized = String(value || '').replace(/[^\d-]/g, '');
+
+            if (!normalized) {
+                return NaN;
+            }
+
+            return Number.parseInt(normalized, 10);
+        };
+
+        const targets = [];
+        const customerStatsWidget = document.querySelector('[data-customer-stats-widget]');
+
+        if (customerStatsWidget) {
+            const customerTotal = customerStatsWidget.querySelector('[data-odometer-customer-total]');
+
+            if (customerTotal) {
+                targets.push({ element: customerTotal, format: '(.ddd)' });
+            }
+
+            customerStatsWidget.querySelectorAll('.text-lg.font-bold.text-black.text-right.whitespace-nowrap').forEach((element) => targets.push({ element, format: 'd' }));
+        }
+
+        targets.forEach(({ element, format }) => {
+            if (element.dataset.odometerInitialized === 'true') {
+                return;
+            }
+
+            const targetValue = parseNumericText(element.textContent);
+
+            if (Number.isNaN(targetValue)) {
+                return;
+            }
+
+            element.dataset.odometerInitialized = 'true';
+            element.textContent = '0';
+
+            const odometer = new window.Odometer({
+                el: element,
+                value: 0,
+                format,
+                duration: 1200,
+                theme: 'default',
+            });
+
+            requestAnimationFrame(() => {
+                odometer.update(targetValue);
+            });
+        });
+    }
+
     function initDashboard() {
         initClock();
         initDropdowns();
         initMiniCharts();
+        initStoreCardGridScrollbar();
+        initRightPanelTableScrollbars();
+        initOdometers();
     }
 
     if (document.readyState === 'loading') {

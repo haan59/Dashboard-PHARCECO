@@ -5,6 +5,24 @@
 // =============================================================
 @use '../base/variables' as v;
 
+// OverlayScrollbars host for the store grid.
+// Change only this value if you want to tune the hard max-height.
+$store-grid-max-height: 880px;
+// Smaller offset => the cutoff line moves lower on screen.
+$store-grid-viewport-offset: 7.25rem;
+
+.store-grid-scroll-host {
+    overflow: visible;
+}
+
+@media (min-width: 1280px) {
+    .store-grid-scroll-host {
+        max-height: $store-grid-max-height;
+        height: min($store-grid-max-height, calc(100dvh - $store-grid-viewport-offset));
+        overflow: hidden;
+    }
+}
+
 // ── Store card ──────────────────────────────────────────────
 .store-card {
     width: 450px;
@@ -13,7 +31,7 @@
     border-radius: v.$radius-lg;
     padding: 1rem;
     box-shadow: v.$shadow-sm;
-    border: 1px solid rgba(0, 0, 0, 0.10);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     transition:

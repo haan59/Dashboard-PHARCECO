@@ -120,3 +120,14 @@
     letter-spacing: 0;
     color: #ffffff;
 }
+
+.odometer,
+.odometer * {
+    font: inherit;
+    color: inherit;
+}
+
+.odometer {
+    line-height: inherit;
+    vertical-align: baseline;
+}

@@ -27,5 +27,8 @@
         "postcss-cli": "^11.0.1",
         "sass": "^1.98.0",
         "tailwindcss": "^4.2.1"
+    },
+    "dependencies": {
+        "overlayscrollbars": "^2.14.0"
     }
 }
