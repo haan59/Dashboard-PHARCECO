@@ -1,0 +1,122 @@
+// =============================================================
+// COMPONENTS / _custom.scss
+// ⚠️  Chỉ viết vào đây khi Tailwind KHÔNG xử lý được:
+//    - ::before / ::after pseudo-elements
+//    - @keyframes animation
+//    - CSS custom properties (var(--x)) phụ thuộc JS
+//    - Selector phức tạp (cha > con, :has(), v.v.)
+//    - Đoạn lặp lại > 5 lần thì gom bằng @apply
+//
+// Mọi trường hợp thông thường → dùng class Tailwind trên HTML.
+// =============================================================
+// ── Thêm CSS tùy chỉnh của bạn bên dưới đây ─────────────────
+.dropdown-menu-caret {
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        pointer-events: none;
+    }
+
+    // Lớp viền tam giác (outer)
+    &::before {
+        border-bottom: 10px solid #dfe3e8;
+    }
+
+    // Lớp nền tam giác (inner)
+    &::after {
+        bottom: calc(100% - 1px);
+        border-bottom: 10px solid #ffffff;
+    }
+}
+
+.dropdown-menu-caret--support {
+    &::before,
+    &::after {
+        right: 16px;
+    }
+}
+
+.dropdown-menu-caret--user {
+    &::before,
+    &::after {
+        right: 18px;
+    }
+}
+
+.dropdown-toggle-feedback {
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dropdown-toggle-feedback--support.dropdown-toggle--active {
+    border-radius: 9999px;
+    background: rgba(137, 200, 109, 0.14);
+    box-shadow:
+        0 0 0 2px rgba(137, 200, 109, 0.35),
+        0 8px 18px rgba(3, 82, 77, 0.12);
+}
+
+.dropdown-toggle-feedback--user.dropdown-toggle--active {
+    border-color: #89c86d;
+    background: #f7fff9;
+    box-shadow: 0 8px 18px rgba(3, 82, 77, 0.12);
+}
+
+.store-card-shop-icon {
+    filter: brightness(0) saturate(100%) invert(74%) sepia(29%) saturate(934%) hue-rotate(56deg) brightness(95%) contrast(88%);
+}
+
+.store-card-medical-icon {
+    filter: brightness(0) saturate(100%) invert(53%) sepia(82%) saturate(2092%) hue-rotate(358deg) brightness(99%) contrast(95%);
+}
+
+.tippy-box[data-theme~='dashboard-tooltip'] {
+    background: #4a4a4a;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.tippy-box[data-theme~='dashboard-tooltip'] .tippy-content {
+    padding: 6px 10px 7px;
+}
+
+.tippy-box[data-theme~='dashboard-tooltip'][data-placement^='right'] > .tippy-arrow {
+    color: #4a4a4a;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.mini-chart-tooltip {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Manrope', sans-serif;
+    line-height: 1;
+}
+
+.mini-chart-tooltip__time {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0;
+}
+
+.mini-chart-tooltip__value {
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0;
+    color: #ffffff;
+}

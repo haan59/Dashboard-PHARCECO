@@ -1,0 +1,8 @@
+/* Tailwind CSS v4 - Entry point */
+@import 'tailwindcss';
+
+/* Scan HTML files for used classes */
+@source "../../src/**/*.html";
+
+/* Import compiled SASS output */
+@import '../../dist/custom.css' layer(components);

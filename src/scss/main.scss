@@ -1,0 +1,18 @@
+// =============================================================
+// main.scss - Entry point chính của SASS
+// Import theo thứ tự: base → components → layouts
+// =============================================================
+
+// --- 1. BASE ---
+@use 'base/variables'; // Biến toàn cục (không output CSS)
+@use 'base/reset'; // CSS reset
+@use 'base/typography'; // Kiểu chữ
+
+// --- 2. COMPONENTS ---
+@use 'components/buttons'; // Nút bấm
+@use 'components/cards'; // Card/Widget
+@use 'components/custom'; // ← Viết CSS tùy chỉnh vào đây khi bất đắc dĩ
+
+// --- 3. LAYOUTS ---
+@use 'layouts/sidebar'; // Sidebar + topbar + layout chính
+@use 'layouts/dashboard'; // Grid dashboard, table, etc.
